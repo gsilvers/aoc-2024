@@ -48,11 +48,11 @@ def part_two(path_to_file: str) -> int:
 
     return result
 
-part_1_results = part_one(path_to_file = "/Users/gregsilverstein/Source/advent-of-code/20241201_input.txt")
+part_1_results = part_one(path_to_file = "20241201_input.txt")
 print(f"part 1 result: {part_1_results}")
 
 
 
-part_2_results = part_two(path_to_file = "/Users/gregsilverstein/Source/advent-of-code/20241201_input.txt")
+part_2_results = part_two(path_to_file = "20241201_input.txt")
 print(f"part 2 result: {part_2_results}")
 
