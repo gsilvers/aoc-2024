@@ -42,10 +42,47 @@ def part_one(path_to_file: str) -> int:
 
     return safe_reports
 
-def part_two(path_to_file: str) -> int:
-    """ Performs part 2 of day 1 of advent of code 2024 """
+def remove_invalid_element(report):
+    for i in range(1, len(report)):
+        current = report[i]
+        previous = report[i - 1]
 
-    return 0
+        if current == previous or abs(current - previous) >= 4:
+            report.pop(i)
+            return report
+
+        ## TODO remove one direction change if it happens also
+        ##
+    return report
+
+def part_two(path_to_file: str) -> int:
+    """ Performs part 2 of day 2 of advent of code 2024 """
+    input_data = parse_file(path_to_file=path_to_file)
+
+    report_status_codes = []
+    safe_reports = 0
+
+    for line_nr, report in enumerate(input_data):
+        report = remove_invalid_element(report)
+
+        status = 1 # ok by default
+        steps = []
+
+        for index,item in enumerate(report[:-1]):
+            steps.append(report[index+1] - item)
+
+        all_less_than_2 = all(abs(x) <= 3  for x in steps) and all(abs(x) > 0 for x in steps)
+        if not all_less_than_2:
+            status = 0
+        all_same_direction = all(x >= 0 for x in steps) or all(x <= 0 for x in steps)
+        if not all_same_direction:
+            status = 0
+
+        report_status_codes.append(status)
+
+
+    safe_reports = sum(report_status_codes)
+    return safe_reports
 
 part_1_results = part_one(path_to_file = "20241202_input.txt")
 print(f"part 1 result: {part_1_results}")
