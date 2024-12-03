@@ -51,8 +51,16 @@ def remove_invalid_element(report):
             report.pop(i)
             return report
 
-        ## TODO remove one direction change if it happens also
-        ##
+    for i in range(2, len(report)):
+        current = report[i]
+        previous = report[i - 1]
+        two_back = report[i - 2]
+
+        if (((current - previous > 0) and (previous - two_back < 0)) or
+            ((current - previous < 0) and (previous - two_back > 0))):
+            report.pop(i)
+            return report
+
     return report
 
 def part_two(path_to_file: str) -> int:
@@ -63,7 +71,15 @@ def part_two(path_to_file: str) -> int:
     safe_reports = 0
 
     for line_nr, report in enumerate(input_data):
+
+        if line_nr < 10:
+            print(f"record: {line_nr}")
+            print(f"report pre: {report}")
+
         report = remove_invalid_element(report)
+
+        if line_nr < 10:
+            print(f"report post: {report}")
 
         status = 1 # ok by default
         steps = []
